@@ -10,21 +10,22 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@Entity
 public class BookingDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private UUID bookingCode;
+    private String bookingCode;
 
-    private UUID hotelId;
+    private String hotelId;
     private String hotelName;
 
-    private UUID roomId;
+    private String roomId;
     private String roomTypeName;
 
-    private UUID customerId;
+    private String customerId;
     private String customerName;
 
     private LocalDateTime checkInDateTime;
@@ -33,7 +34,7 @@ public class BookingDetail {
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     private BillingDetail billingDetail;
 
     private String cancellationPolicy;
@@ -44,9 +45,8 @@ public class BookingDetail {
     @UpdateTimestamp
     private LocalDateTime bookingUpdateDate;
 
-
     @PrePersist
     public void autofill() {
-        this.setBookingCode(UUID.randomUUID());
+        this.setBookingCode(UUID.randomUUID().toString().replace("-","").toUpperCase());
     }
 }

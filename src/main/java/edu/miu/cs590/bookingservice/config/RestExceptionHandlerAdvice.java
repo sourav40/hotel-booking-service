@@ -35,8 +35,8 @@ public class RestExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 //                HttpStatus.UNAUTHORIZED);
 //    }
 
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity<ErrorResponse> internalServerException(Exception exception, WebRequest request) {
+    @ExceptionHandler({RuntimeException.class})
+    public ResponseEntity<ErrorResponse> internalServerException(RuntimeException exception, WebRequest request) {
         return new ResponseEntity<>(new ErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 exception.getMessage(),

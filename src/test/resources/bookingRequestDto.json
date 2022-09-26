@@ -1,0 +1,14 @@
+{
+  "hotelId":"1a7f2053-ddd1-44ce-84af-1d5283cb8906",
+  "hotelName":"O'Hare Innings",
+  "roomId":"efcca349-6e9b-40a7-acf6-035623ac5b9d",
+  "roomTypeName":"Queen Suit",
+  "customerId":"fe7e0e03-8cc1-44bf-8733-a2907b98ec4d",
+  "customerName":"Saroj K Dev",
+  "checkInDateTime": "2022-12-02T13:15:30",
+  "checkInDateTime": "2022-12-03T10:15:30",
+  "cancellationPolicy":"No Cancellation Policy",
+  "rate":230.0,
+  "noOfRooms":2,
+  "tax":7.0
+}
