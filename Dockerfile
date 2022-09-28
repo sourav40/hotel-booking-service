@@ -5,7 +5,7 @@ RUN mvn clean
 RUN mvn compiler:help jar:help resources:help surefire:help clean:help install:help deploy:help site:help dependency:help javadoc:help spring-boot:help
 RUN mvn dependency:go-offline
 COPY src/ /build/src/
-RUN mvn package
+RUN mvn package -Dmaven.test.skip=true
 
 FROM openjdk:17-alpine
 ENV APP_FILE booking-service.jar
