@@ -1,9 +1,9 @@
 package edu.miu.cs590.bookingservice.serviceimpl;
 
-import edu.miu.cs590.bookingservice.dto.BookingCustomerDashboardDto;
-import edu.miu.cs590.bookingservice.dto.BookingDashboardDto;
-import edu.miu.cs590.bookingservice.dto.BookingResponseDto;
-import edu.miu.cs590.bookingservice.dto.BookingRequestDto;
+import edu.miu.cs590.bookingservice.dto.*;
+import edu.miu.cs590.bookingservice.entity.BookingDetail;
+import edu.miu.cs590.bookingservice.enums.BillingStatus;
+import edu.miu.cs590.bookingservice.enums.BookingStatus;
 import edu.miu.cs590.bookingservice.maaper.BookingMapper;
 import edu.miu.cs590.bookingservice.repository.BookingRepository;
 import edu.miu.cs590.bookingservice.service.BookingService;
@@ -35,5 +35,14 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<BookingCustomerDashboardDto> getBookingDetailsByCustomerId(String customerId,Pageable pageable) {
         return bookingMapper.entityListToCustomerDashboardDtoList(bookingRepository.findAllByCustomerId(customerId,pageable));
+    }
+
+    @Override
+    @Transactional
+    public void updateBookingAndPaymentStatus(PaymentResponseDto paymentDto){
+        BookingDetail bookingDetail = bookingRepository.findBookingDetailByBookingCode(paymentDto.getBookingCode());
+        bookingDetail.setBookingStatus(BookingStatus.BOOKED);
+        bookingDetail.getBillingDetail().setBillingStatus(BillingStatus.PAID);
+        bookingRepository.save(bookingDetail);
     }
 }

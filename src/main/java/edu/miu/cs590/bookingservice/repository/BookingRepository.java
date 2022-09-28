@@ -11,4 +11,6 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<BookingDetail,Long>{
     List<BookingDetail> findAllByHotelId(String hotelId, Pageable pageable);
     List<BookingDetail> findAllByCustomerId(String customerId, Pageable pageable);
+
+    BookingDetail findBookingDetailByBookingCode(String bookingCode);
 }
