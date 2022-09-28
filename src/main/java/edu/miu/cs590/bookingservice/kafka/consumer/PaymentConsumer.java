@@ -1,6 +1,7 @@
 package edu.miu.cs590.bookingservice.kafka.consumer;
 
 import edu.miu.cs590.bookingservice.dto.PaymentResponseDto;
+import edu.miu.cs590.bookingservice.service.BookingService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -8,6 +9,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class PaymentConsumer {
 
     @Value("${kafka-server-port}")
     private String kafkaPort;
+
+    @Autowired
+    private BookingService bookingService;
 
     public void consumeMessage() {
 
@@ -65,7 +70,7 @@ public class PaymentConsumer {
                     );
                     PaymentResponseDto paymentResponseDto = record.value();
                     log.info("Payment response ::" + paymentResponseDto);
-                    // to do -> update status in the payment table
+                   bookingService.updateBookingAndPaymentStatus(paymentResponseDto);
                 }
             }
         } catch (WakeupException e) {
